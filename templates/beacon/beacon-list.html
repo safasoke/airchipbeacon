@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Beacon List
+{% endblock %}
+{% block ust_icerik %}
+
+{% endblock %}
+
+{% block icerik %}
+
+    <h1 class="page-header">BEACON LİSTESİ</h1>
+    <div class="col-lg-11 pull-center">
+        {% for beacon in beacon %}
+            <h2><a href="{% url 'beacon-detail' beacon.pk %}">{{ beacon.uuid }}</a></h2>
+        {% empty %}
+            <p>İçerik Bulunamadı</p>
+        {% endfor %}
+    </div>
+{% endblock %}

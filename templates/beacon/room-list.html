@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Room List
+{% endblock %}
+{% block ust_icerik %}
+
+{% endblock %}
+
+{% block icerik %}
+
+    <h1 class="page-header">ODA LİSTESİ</h1>
+    <div class="col-lg-11 pull-center">
+        {% for room in room %}
+            <h2><a href="{% url 'room-detail' room.pk %}">{{ room.isim }}</a></h2>
+        {% empty %}
+            <p>İçerik Bulunamadı</p>
+        {% endfor %}
+    </div>
+{% endblock %}

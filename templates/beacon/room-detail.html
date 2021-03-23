@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Room Detail
+{% endblock %}
+{% block icerik %}
+    <div class="row">
+        <div class="col-lg-12 pull-center">
+            <div class="col-lg-10">
+                <h2 class="page-header"><a href="{% url 'room-list' %}"><span
+                        class="glyphicon glyphicon-arrow-left"></span> </a> <a
+                        href="#">{{ room.isim|upper }}</a>
+                    </h2>
+            </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col-lg-3 pull-right">
+                <a class="btn btn-primary btn-sm" href="{% url 'room-update' room.pk %}">Update</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'room-delete' room.pk %}">Delete</a>
+            </div>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Modul List
+{% endblock %}
+{% block ust_icerik %}
+
+{% endblock %}
+
+{% block icerik %}
+
+    <h1 class="page-header">ALGILAYICI MODÜL LİSTESİ</h1>
+    <div class="col-lg-11 pull-center">
+        {% for modul in modul %}
+            <h2><a href="{% url 'modul-detail' modul.pk %}">{{ modul.isim }}</a></h2>
+        {% empty %}
+            <p>İçerik Bulunamadı</p>
+        {% endfor %}
+    </div>
+{% endblock %}
