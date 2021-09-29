@@ -3,6 +3,7 @@ from beacon.models import Beacon
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 class Personeller(models.Model):
@@ -16,7 +17,7 @@ class Personeller(models.Model):
     soyisim = models.CharField(max_length=50, verbose_name='Soyisim', blank=False, null=True)
     unvan = models.CharField(max_length=50, verbose_name='Ünvan', blank=True, null=True)
     departman = models.CharField(max_length=50, verbose_name='Departman', blank=True, null=True)
-    #tc_kimlik_no = models.CharField(max_length=11, verbose_name='TC Kimlik No', blank=False, null=True, unique=True)
+    # tc_kimlik_no = models.CharField(max_length=11, verbose_name='TC Kimlik No', blank=False, null=True, unique=True)
     cinsiyet = models.CharField(choices=SEX, blank=False, null=True, max_length=20, verbose_name='Cinsiyet')
     dogum_tarihi = models.DateField(null=True, blank=True, verbose_name='Doğum Tarihi')
     kan_grubu = models.CharField(choices=KANGRUBU, verbose_name='Kan Grubu', max_length=30, blank=False, null=True)
@@ -48,6 +49,7 @@ class Gorevler(models.Model):
 
     def __str__(self):
         return self.gorev_adi
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, null=True, blank=False, verbose_name='User', on_delete=models.CASCADE)

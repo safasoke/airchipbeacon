@@ -12,6 +12,8 @@
                         class="glyphicon glyphicon-arrow-left"></span> </a> <a
                         href="#">{{ personel.isim|upper }} {{ personel.soyisim|upper }}</a>
                     </h2>
+                <p class="lead"><b>Profil: &nbsp;</b><a
+                        href="{% url 'user-profile' personel.user.username %}">{{ personel.user.username }}</a>
             </div>
         </div>
     </div>
