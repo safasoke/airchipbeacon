@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, Http404
 from .models import Beacon, AlgilayiciModul, Oda
 from .forms import BeaconForm, RoomForm, ModulForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -41,7 +42,7 @@ def beacon_detail(request, pk):
         raise Http404
     return render(request, 'beacon/beacon-detail.html', context={'beacon': beacon, 'form': form})
 
-
+@login_required(login_url='/login/')
 def beacon_list(request):
     gelen_deger = request.GET.get('id', None)
     beacon = Beacon.objects.all()
@@ -87,7 +88,7 @@ def modul_detail(request, pk):
         raise Http404
     return render(request, 'beacon/modul-detail.html', context={'modul': modul, 'form': form})
 
-
+@login_required(login_url='/login/')
 def modul_list(request):
     gelen_deger = request.GET.get('id', None)
     modul = AlgilayiciModul.objects.all()
@@ -133,7 +134,7 @@ def room_detail(request, pk):
         raise Http404
     return render(request, 'beacon/room-detail.html', context={'room': room, 'form': form})
 
-
+@login_required(login_url='/login/')
 def room_list(request):
     gelen_deger = request.GET.get('id', None)
     room = Oda.objects.all()

@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/v1/personnel/',include(('rest_personnel.urls','rest_personnel'), namespace='personnel-api')),
     path('personnel/', include('personel.urls')),
     path('beacon/', include('beacon.urls')),
+    path('', include('personel.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
