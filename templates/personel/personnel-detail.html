@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block ust_icerik %}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        td, th {
+            border: 1px solid #000000;
+            text-align: left;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        tr:nth-child(even) {
+            background-color: white;
+        }
+    </style>
+{% endblock %}
 {% block title %}
     Personnel Detail
 {% endblock %}
@@ -11,19 +30,62 @@
                 <h2 class="page-header"><a href="{% url 'personnel-list' %}"><span
                         class="glyphicon glyphicon-arrow-left"></span> </a> <a
                         href="#">{{ personel.isim|upper }} {{ personel.soyisim|upper }}</a>
-                    </h2>
-                <p class="lead"><b>Profil: &nbsp;</b><a
+                </h2>
+                <p class="lead"><b>Kullanıcı Profili: &nbsp;</b><a
                         href="{% url 'user-profile' personel.user.username %}">{{ personel.user.username }}</a>
+                </p>
             </div>
         </div>
     </div>
-
-        <div class="row">
-            <div class="col-lg-3 pull-right">
-                <a class="btn btn-primary btn-sm" href="{% url 'personnel-update' personel.pk %}">Güncelle</a>
-                <a class="btn btn-danger btn-sm" href="{% url 'personnel-delete' personel.pk %}">Sil</a>
-            </div>
+    <div class="row col-lg-8 pull-center">
+        <table>
+            <tr>
+                <th colspan="2" style="text-align:center">PERSONEL DETAYLARI</th>
+            </tr>
+            <tr>
+                <td>Ünvan:</td>
+                <td>{{ personel.unvan }}</td>
+            </tr>
+            <tr>
+                <td>Departman:</td>
+                <td>{{ personel.departman }}</td>
+            </tr>
+            <tr>
+                <td>Tc Kimlik No:</td>
+                <td>{{ personel.user.username }}</td>
+            </tr>
+            <tr>
+                <td>Cinsiyet:</td>
+                <td>{{ personel.cinsiyet }}</td>
+            </tr>
+            <tr>
+                <td>Doğum Tarihi:</td>
+                <td>{{ personel.dogum_tarihi }}</td>
+            </tr>
+            <tr>
+                <td>Kan Grubu:</td>
+                <td>{{ personel.kan_grubu }}</td>
+            </tr>
+            <tr>
+                <td>SSK No:</td>
+                <td>{{ personel.ssk_no }}</td>
+            </tr>
+            <tr>
+                <td>Iban No:</td>
+                <td>{{ personel.iban }}</td>
+            </tr>
+            <tr>
+                <td>Beacon:</td>
+                <td>{{ personel.beacon }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 pull-right">
+            <a class="btn btn-primary btn-sm" href="{% url 'personnel-update' personel.pk %}">Güncelle</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'personnel-delete' personel.pk %}">Sil</a>
         </div>
+    </div>
 
     <div class="row" style="margin-top: 30px">
         <div class="col-lg-10 pull-center">

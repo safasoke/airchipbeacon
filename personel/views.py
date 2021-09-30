@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, Http404, HttpResponse
 from .models import Personeller
-from .forms import PersonnelForm, TaskForm, PersonnelSearch, RegisterForm, LoginForm, UserPasswordChangeForm2, UserProfileUpdateForm
+from .forms import PersonnelForm, TaskForm, PersonnelSearch, RegisterForm, LoginForm, UserPasswordChangeForm2, \
+    UserProfileUpdateForm
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
@@ -28,6 +29,8 @@ def add_personnel(request):
             username = form1.cleaned_data.get('username')
             user.set_password(password)
             user.save()
+            personnelprofile = Personeller.objects.update(user=user)
+            Personeller.user = personnelprofile
             userprofile = UserProfile.objects.create(user=user)
             user.userprofile = userprofile
             user = authenticate(username=username, password=password)
@@ -37,6 +40,9 @@ def add_personnel(request):
                     messages.success(request, '<b>Kayıt olundu</b>', extra_tags='success')
                     return HttpResponseRedirect(user.userprofile.get_user_profile_url())
             return HttpResponseRedirect(personnels.get_absolute_url())
+        else:
+            messages.warning(request, '<b>Personel eklenemedi. Lütfen girdiğiniz bilgileri kontrol ediniz.</b>',
+                             extra_tags='warning')
     return render(request, 'personel/add-personnel.html', context={'form': form})
 
 
@@ -76,6 +82,7 @@ def personnel_delete(request, pk):
     personel.delete()
     return HttpResponseRedirect(reverse('personnel-list'))
 
+
 @login_required(login_url='/login/')
 def personnel_list(request):
     gelen_deger = request.GET.get('id', None)
@@ -85,7 +92,7 @@ def personnel_list(request):
         search = form.cleaned_data.get('search', None)
         if search:
             personeller = personeller.filter(
-                Q(isim__icontains=search) | Q(soyisim__icontains=search) | Q(tc_kimlik_no__icontains=search))
+                Q(isim__icontains=search) | Q(soyisim__icontains=search))
     page = request.GET.get('page', 1)
     if gelen_deger:
         personeller = personeller.filter(pk=gelen_deger)
@@ -114,6 +121,7 @@ def search_auto(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
+
 @is_anonymous_required
 def user_login(request):
     form = LoginForm(request.POST or None)
@@ -129,6 +137,7 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('personnel-list'))
     return render(request, 'personel/login.html', context={'form': form})
 
+
 def user_logout(request):
     username = request.user.username
     logout(request)
@@ -136,11 +145,13 @@ def user_logout(request):
     messages.success(request, msg, extra_tags='success')
     return HttpResponseRedirect(reverse('user-login'))
 
+
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    #user_post_list = Post.objects.filter(user=user)
+    # user_post_list = Post.objects.filter(user=user)
     return render(request, 'personel/profile/user-profile-page.html',
                   context={'user': user})
+
 
 def user_settings(request):
     bio = request.user.userprofile.bio
@@ -163,9 +174,11 @@ def user_settings(request):
 
     return render(request, 'personel/profile/user-settings.html', context={'form': form})
 
+
 def user_about(request, username):
     user = get_object_or_404(User, username=username)
     return render(request, 'personel/profile/user-aboutme.html', context={'user': user})
+
 
 def user_password_change(request):
     # form = UserPasswordChangeForm(user=request.user, data=request.POST or None)
@@ -180,4 +193,3 @@ def user_password_change(request):
         messages.success(request, 'Şifreniz başarıyla güncellendi', extra_tags='success')
         return HttpResponseRedirect(reverse('user-profile', kwargs={'username': request.user.username}))
     return render(request, 'personel/profile/user-password-change.html', context={'form': form})
-

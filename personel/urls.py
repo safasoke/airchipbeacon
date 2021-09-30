@@ -16,5 +16,5 @@ urlpatterns = [
     re_path(r'personnel-detail/(?P<pk>[0-9]+)/$', personnel_detail, name='personnel-detail'),
     re_path(r'add-task/(?P<pk>[0-9]+)/$', add_task, name='add-task'),
     re_path(r'(?P<username>[-\w]+)/about/$', user_about, name='user-aboutme'),
-    re_path(r'(?P<username>[-\w]+)/$', user_profile, name='user-profile')
+    path(r'(?P<username>[-\w]+)/$', user_profile, name='user-profile')
 ]
