@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, Http404, HttpResponse
-from .models import Personeller
+from .models import Personeller, Gorevler
 from .forms import PersonnelForm, TaskForm, PersonnelSearch, RegisterForm, LoginForm, UserPasswordChangeForm2, \
     UserProfileUpdateForm
 from django.db.models import Q
@@ -148,7 +148,7 @@ def user_logout(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    # user_post_list = Post.objects.filter(user=user)
+    #user_task_list = Personeller.objects.filter(user=user)
     return render(request, 'personel/profile/user-profile-page.html',
                   context={'user': user})
 
