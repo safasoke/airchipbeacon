@@ -57,7 +57,7 @@ class UserProfile(models.Model):
     profile_photo = models.ImageField(null=True, blank=True, verbose_name='Profil Fotoğrafı')
 
     class Meta:
-        verbose_name_plural = 'Kullanıcı Profilleri'
+        verbose_name_plural = 'Kullanıcı Profiller'
 
     def get_screen_name(self):
         user = self.user

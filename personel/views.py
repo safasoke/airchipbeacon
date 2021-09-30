@@ -17,14 +17,15 @@ from django.contrib.auth import update_session_auth_hash
 
 def add_personnel(request):
     form = [PersonnelForm, RegisterForm]
+
     if request.method == "POST":
-        form = RegisterForm(data=request.POST or None)
         form2 = PersonnelForm(data=request.POST, files=request.FILES)
-        if form.is_valid() and form2.is_valid():
-            form_save = form2.save()
-            user = form.save(commit=False)
-            password = form.cleaned_data.get('password')
-            username = form.cleaned_data.get('username')
+        form1 = RegisterForm(data=request.POST or None)
+        if form1.is_valid() and form2.is_valid():
+            personnels = form2.save()
+            user = form1.save(commit=False)
+            password = form1.cleaned_data.get('password')
+            username = form1.cleaned_data.get('username')
             user.set_password(password)
             user.save()
             userprofile = UserProfile.objects.create(user=user)
@@ -35,7 +36,7 @@ def add_personnel(request):
                     login(request, user)
                     messages.success(request, '<b>Kayıt olundu</b>', extra_tags='success')
                     return HttpResponseRedirect(user.userprofile.get_user_profile_url())
-            return HttpResponseRedirect(form_save.get_absolute_url())
+            return HttpResponseRedirect(personnels.get_absolute_url())
     return render(request, 'personel/add-personnel.html', context={'form': form})
 
 

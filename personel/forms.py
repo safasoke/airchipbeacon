@@ -9,7 +9,7 @@ YEARS = [x for x in range(1940, 2021)]
 
 
 class PersonnelForm(forms.ModelForm):
-    sex = forms.ChoiceField(required=True, label='Cinsiyet', choices=Personeller.SEX)
+    #sex = forms.ChoiceField(required=True, label='Cinsiyet', choices=Personeller.SEX)
     dogum_tarihi = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
     iban = forms.CharField(min_length=5, required=False)
 
