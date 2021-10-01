@@ -8,14 +8,15 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import UserProfile
-from .decorators import is_anonymous_required
+from .decorators import is_anonymous_required, admin_only
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import update_session_auth_hash
 
 
 # Create your views here.
-
+@login_required(login_url='/login/')
+@admin_only
 def add_personnel(request):
     form = [PersonnelForm, RegisterForm]
 
@@ -29,14 +30,16 @@ def add_personnel(request):
             username = form1.cleaned_data.get('username')
             user.set_password(password)
             user.save()
-            personnelprofile = Personeller.objects.update(user=user)
-            Personeller.user = personnelprofile
+            #personnelprofile = Personeller.objects.update(user=user)
+            Personeller.user = user
             userprofile = UserProfile.objects.create(user=user)
             user.userprofile = userprofile
+            group = Group.objects.get(name='personnel')
+            user.groups.add(group)
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    login(request, user)
+                    #login(request, user)
                     messages.success(request, '<b>Kayıt olundu</b>', extra_tags='success')
                     return HttpResponseRedirect(user.userprofile.get_user_profile_url())
             return HttpResponseRedirect(personnels.get_absolute_url())
@@ -46,6 +49,8 @@ def add_personnel(request):
     return render(request, 'personel/add-personnel.html', context={'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def add_task(request, pk):
     personel = get_object_or_404(Personeller, pk=pk)
     form = TaskForm(data=request.POST)
@@ -56,6 +61,8 @@ def add_task(request, pk):
         return HttpResponseRedirect(reverse('personnel-detail', kwargs={'pk': personel.pk}))
 
 
+@login_required(login_url='/login/')
+@admin_only
 def personnel_detail(request, pk):
     form = TaskForm()
     try:
@@ -65,6 +72,8 @@ def personnel_detail(request, pk):
     return render(request, 'personel/personnel-detail.html', context={'personel': personel, 'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def personnel_update(request, pk):
     # if not request.user.is_authenticated:
     # return HttpResponseRedirect(reverse('user-login'))
@@ -77,6 +86,8 @@ def personnel_update(request, pk):
     return render(request, 'personel/personnel-update.html', context=context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def personnel_delete(request, pk):
     personel = get_object_or_404(Personeller, pk=pk)
     personel.delete()
@@ -84,6 +95,7 @@ def personnel_delete(request, pk):
 
 
 @login_required(login_url='/login/')
+@admin_only
 def personnel_list(request):
     gelen_deger = request.GET.get('id', None)
     personeller = Personeller.objects.all()
@@ -106,6 +118,8 @@ def personnel_list(request):
     return render(request, 'personel/personnel-list.html', context={'personeller': personeller, 'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def search_auto(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
@@ -148,7 +162,7 @@ def user_logout(request):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    #user_task_list = Personeller.objects.filter(user=user)
+    # user_task_list = Personeller.objects.filter(user=user)
     return render(request, 'personel/profile/user-profile-page.html',
                   context={'user': user})
 

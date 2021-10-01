@@ -76,7 +76,7 @@ class PersonnelSearch(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(required=True, max_length=50, label='TC Kimlik No',
+    username = forms.CharField(required=True, max_length=11, label='TC Kimlik No',
                                widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(required=True, max_length=50, label='Şifre',
                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))

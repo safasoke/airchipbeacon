@@ -2,10 +2,12 @@ from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, re
 from .models import Beacon, AlgilayiciModul, Oda
 from .forms import BeaconForm, RoomForm, ModulForm
 from django.contrib.auth.decorators import login_required
+from personel.decorators import admin_only
 
 
 # Create your views here.
-
+@login_required(login_url='/login/')
+@admin_only
 def add_beacon(request):
     form = BeaconForm
     if request.method == "POST":
@@ -16,6 +18,8 @@ def add_beacon(request):
     return render(request, 'beacon/add-beacon.html', context={'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def beacon_update(request, pk):
     # if not request.user.is_authenticated:
     # return HttpResponseRedirect(reverse('user-login'))
@@ -28,12 +32,16 @@ def beacon_update(request, pk):
     return render(request, 'beacon/beacon-update.html', context=context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def beacon_delete(request, pk):
     beacon = get_object_or_404(Beacon, pk=pk)
     beacon.delete()
     return HttpResponseRedirect(reverse('beacon-list'))
 
 
+@login_required(login_url='/login/')
+@admin_only
 def beacon_detail(request, pk):
     form = BeaconForm()
     try:
@@ -42,7 +50,9 @@ def beacon_detail(request, pk):
         raise Http404
     return render(request, 'beacon/beacon-detail.html', context={'beacon': beacon, 'form': form})
 
+
 @login_required(login_url='/login/')
+@admin_only
 def beacon_list(request):
     gelen_deger = request.GET.get('id', None)
     beacon = Beacon.objects.all()
@@ -52,6 +62,8 @@ def beacon_list(request):
     return render(request, 'beacon/beacon-list.html', context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def add_modul(request):
     form = ModulForm
     if request.method == "POST":
@@ -62,6 +74,8 @@ def add_modul(request):
     return render(request, 'beacon/add-modul.html', context={'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def modul_update(request, pk):
     # if not request.user.is_authenticated:
     # return HttpResponseRedirect(reverse('user-login'))
@@ -74,12 +88,16 @@ def modul_update(request, pk):
     return render(request, 'beacon/modul-update.html', context=context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def modul_delete(request, pk):
     modul = get_object_or_404(AlgilayiciModul, pk=pk)
     modul.delete()
     return HttpResponseRedirect(reverse('modul-list'))
 
 
+@login_required(login_url='/login/')
+@admin_only
 def modul_detail(request, pk):
     form = BeaconForm()
     try:
@@ -88,7 +106,9 @@ def modul_detail(request, pk):
         raise Http404
     return render(request, 'beacon/modul-detail.html', context={'modul': modul, 'form': form})
 
+
 @login_required(login_url='/login/')
+@admin_only
 def modul_list(request):
     gelen_deger = request.GET.get('id', None)
     modul = AlgilayiciModul.objects.all()
@@ -98,6 +118,8 @@ def modul_list(request):
     return render(request, 'beacon/modul-list.html', context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def add_room(request):
     form = RoomForm
     if request.method == "POST":
@@ -108,6 +130,8 @@ def add_room(request):
     return render(request, 'beacon/add-room.html', context={'form': form})
 
 
+@login_required(login_url='/login/')
+@admin_only
 def room_update(request, pk):
     # if not request.user.is_authenticated:
     # return HttpResponseRedirect(reverse('user-login'))
@@ -120,12 +144,16 @@ def room_update(request, pk):
     return render(request, 'beacon/room-update.html', context=context)
 
 
+@login_required(login_url='/login/')
+@admin_only
 def room_delete(request, pk):
     room = get_object_or_404(Oda, pk=pk)
     room.delete()
     return HttpResponseRedirect(reverse('room-list'))
 
 
+@login_required(login_url='/login/')
+@admin_only
 def room_detail(request, pk):
     form = ModulForm()
     try:
@@ -134,7 +162,9 @@ def room_detail(request, pk):
         raise Http404
     return render(request, 'beacon/room-detail.html', context={'room': room, 'form': form})
 
+
 @login_required(login_url='/login/')
+@admin_only
 def room_list(request):
     gelen_deger = request.GET.get('id', None)
     room = Oda.objects.all()
