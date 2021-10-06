@@ -9,9 +9,11 @@ YEARS = [x for x in range(1940, 2021)]
 
 
 class PersonnelForm(forms.ModelForm):
-    #sex = forms.ChoiceField(required=True, label='Cinsiyet', choices=Personeller.SEX)
+    # sex = forms.ChoiceField(required=True, label='Cinsiyet', choices=Personeller.SEX)
     dogum_tarihi = forms.DateField(widget=forms.SelectDateWidget(years=YEARS))
-    iban = forms.CharField(min_length=5, required=False)
+    iban = forms.CharField(min_length=5, required=False,
+                           help_text='<span class="text-success" ><b>Iban uzunluğu en az 5 karakter '
+                                     'olmalıdır.</b></span></br>')
 
     class Meta:
         model = Personeller
@@ -28,10 +30,14 @@ class PersonnelForm(forms.ModelForm):
 
 class RegisterForm(forms.ModelForm):
     password = forms.CharField(min_length=6, required=True, label='Şifre',
-                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+                               widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+                               help_text='<span class="text-success"><b>Şifreniz en az 6 karakter içermek '
+                                         'zorundadır.</b></span></br>')
     password_confirm = forms.CharField(min_length=6, required=True, label='Şifre Tekrar',
                                        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    username = forms.CharField(min_length=11, max_length=11, label='Tc Kimlik No:')
+    username = forms.CharField(min_length=11, max_length=11, label='Tc Kimlik No:',
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User

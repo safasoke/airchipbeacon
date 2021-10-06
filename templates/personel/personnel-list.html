@@ -51,7 +51,7 @@
                 <div class="col-lg-11 pull-center">
                     {% for personeller in personeller %}
                         <h2>
-                            <a href="{% url 'personnel-detail' personeller.pk %}">{{ personeller.isim }} {{ personeller.soyisim }}</a>
+                            <a href="{% url 'personnel-detail' personeller.pk %}">{{ personeller.isim.upper }} {{ personeller.soyisim.upper }}</a>
                         </h2>
                     {% empty %}
                         <p>İçerik Bulunamadı</p>
@@ -62,7 +62,7 @@
                 <div class="col-lg-11 pull-center">
                     {% for personeller in personeller %}
                         <h2>
-                            <a href="{% url 'personnel-detail' personeller.pk %}">{{ personeller.unvan }}</a>
+                            <a href="{% url 'personnel-detail' personeller.pk %}">{{ personeller.unvan.upper }}</a>
                         </h2>
                     {% empty %}
                         <p>İçerik Bulunamadı</p>

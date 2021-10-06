@@ -1,3 +1,5 @@
+from django.db.models import Value as V
+from django.db.models.functions import Concat
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, reverse, Http404, HttpResponse
 from .models import Personeller, Gorevler
 from .forms import PersonnelForm, TaskForm, PersonnelSearch, RegisterForm, LoginForm, UserPasswordChangeForm2, \
@@ -30,7 +32,7 @@ def add_personnel(request):
             username = form1.cleaned_data.get('username')
             user.set_password(password)
             user.save()
-            #personnelprofile = Personeller.objects.update(user=user)
+            # personnelprofile = Personeller.objects.update(user=user)
             Personeller.user = user
             userprofile = UserProfile.objects.create(user=user)
             user.userprofile = userprofile
@@ -39,7 +41,7 @@ def add_personnel(request):
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-                    #login(request, user)
+                    # login(request, user)
                     messages.success(request, '<b>Kayıt olundu</b>', extra_tags='success')
                     return HttpResponseRedirect(user.userprofile.get_user_profile_url())
             return HttpResponseRedirect(personnels.get_absolute_url())
@@ -100,11 +102,12 @@ def personnel_list(request):
     gelen_deger = request.GET.get('id', None)
     personeller = Personeller.objects.all()
     form = PersonnelSearch(data=request.GET or None)
+    personeller = Personeller.objects.annotate(full_name=Concat('isim', V(' '), 'soyisim'))
     if form.is_valid():
         search = form.cleaned_data.get('search', None)
         if search:
             personeller = personeller.filter(
-                Q(isim__icontains=search) | Q(soyisim__icontains=search))
+                Q(isim__icontains=search) | Q(soyisim__icontains=search) | Q(full_name__icontains=search))
     page = request.GET.get('page', 1)
     if gelen_deger:
         personeller = personeller.filter(pk=gelen_deger)
