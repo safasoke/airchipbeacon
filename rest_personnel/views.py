@@ -7,9 +7,11 @@ from personel.models import Personeller, Gorevler
 
 from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, DestroyAPIView, CreateAPIView
 
+
 class PersonnelList(ListAPIView):
     serializer_class = PersonnelSerializer
     queryset = Personeller.objects.all()
+
 
 class PersonnelDetail(RetrieveAPIView):
     serializer_class = PersonnelSerializer

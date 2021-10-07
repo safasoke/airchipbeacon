@@ -21,7 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/beacon/', include(('rest_beacon.urls', 'rest_beacon'), namespace='beacon-api')),
-    path('api/v1/personnel/',include(('rest_personnel.urls','rest_personnel'), namespace='personnel-api')),
+    path('api/v1/personnel/', include(('rest_personnel.urls', 'rest_personnel'), namespace='personnel-api')),
     path('personnel/', include('personel.urls')),
     path('beacon/', include('beacon.urls')),
     path('', include('personel.urls')),

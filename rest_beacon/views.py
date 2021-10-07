@@ -73,14 +73,17 @@ class RoomDetail(RetrieveAPIView):
     queryset = AlgilayiciModul.objects.all()
     lookup_field = 'id'
 
+
 class RoomCreate(CreateAPIView):
     serializer_class = OdaSerializer
     queryset = Oda.objects.all()
+
 
 class RoomUpdate(RetrieveUpdateAPIView):
     serializer_class = OdaSerializer
     queryset = AlgilayiciModul.objects.all()
     lookup_field = 'id'
+
 
 class RoomDelete(DestroyAPIView):
     serializer_class = OdaSerializer
