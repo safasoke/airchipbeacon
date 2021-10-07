@@ -10,7 +10,7 @@
 
 {% block icerik %}
 
-    <h1 class="page-header">BEACON LİSTESİ</h1>
+    <h1 class="page-header" style="margin-left:10px">BEACON LİSTESİ</h1>
     <div class="col-lg-11 pull-center">
         {% for beacon in beacon %}
             <h2><a href="{% url 'beacon-detail' beacon.pk %}">{{ beacon.uuid }}</a></h2>

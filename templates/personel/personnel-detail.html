@@ -31,7 +31,7 @@
                         class="glyphicon glyphicon-arrow-left"></span> </a> <a
                         href="#">{{ personel.isim|upper }} {{ personel.soyisim|upper }}</a>
                 </h2>
-                <p class="lead"><b>Kullanıcı Profili: &nbsp;</b><a
+                <p class="lead" style="margin-left:10px"><b>Kullanıcı Profili: &nbsp;</b><a
                         href="{% url 'user-profile' personel.user.username %}">{{ personel.user.username }}</a>
                 </p>
             </div>
@@ -81,7 +81,7 @@
         </table>
     </div>
     <div class="row">
-        <div class="col-lg-3 pull-right">
+        <div class="col-lg-3 pull-right" style="margin-top: 10px">
             <a class="btn btn-primary btn-sm" href="{% url 'personnel-update' personel.pk %}">Güncelle</a>
             <a class="btn btn-danger btn-sm" href="{% url 'personnel-delete' personel.pk %}">Sil</a>
         </div>

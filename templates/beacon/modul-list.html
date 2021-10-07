@@ -10,7 +10,7 @@
 
 {% block icerik %}
 
-    <h1 class="page-header">ALGILAYICI MODÜL LİSTESİ</h1>
+    <h1 class="page-header" style="margin-left:10px">ALGILAYICI MODÜL LİSTESİ</h1>
     <div class="col-lg-11 pull-center">
         {% for modul in modul %}
             <h2><a href="{% url 'modul-detail' modul.pk %}">{{ modul.isim }}</a></h2>
